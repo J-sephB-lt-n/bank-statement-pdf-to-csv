@@ -1,9 +1,17 @@
+"""
+Identify table in image using Microsoft table-transformer
+
+usage:
+    $ python experiments/table-transformer.py "/path/to/img.png"
+"""
+
 import torch
 from transformers import AutoImageProcessor, TableTransformerForObjectDetection
-from PIL import Image
+from PIL import Image, ImageDraw
+import sys
 
 # file_path = hf_hub_download(repo_id="nielsr/example-pdf", repo_type="dataset", filename="example_pdf.png")
-file_path = "/Users/josephbolton/Downloads/bank_statement_images/output-1.png"
+file_path = sys.argv[1] #"/Users/josephbolton/Downloads/bank_statement_images/output-1.png"
 image = Image.open(file_path).convert("RGB")
 
 image_processor = AutoImageProcessor.from_pretrained(
@@ -27,7 +35,6 @@ results = image_processor.post_process_object_detection(
     outputs, threshold=0.9, target_sizes=target_sizes
 )[0]
 
-from PIL import ImageDraw
 
 for score, label, box in zip(results["scores"], results["labels"], results["boxes"]):
     draw = ImageDraw.Draw(image)
