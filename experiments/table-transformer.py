@@ -6,7 +6,7 @@ usage:
 """
 
 import torch
-from transformers import AutoImageProcessor, TableTransformerForObjectDetection
+from transformers import AutoImageProcessor, TableTransformerModel, TableTransformerForObjectDetection
 from PIL import Image, ImageDraw
 import sys
 
